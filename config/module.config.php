@@ -7,11 +7,6 @@ return array(
         ),
         'default_locale' => 'en_GB',
     ),
-    'view_manager' => array(
-        'template_path_stack' => array(
-            'wfknews' => __DIR__ . '/../view',
-        ),
-    ),
     'translator' => array(
         'translation_file_patterns' => array(
             array(
