@@ -1,0 +1,8 @@
+{
+    "name": "wfk/wfk-locale",
+    "description": "Adds locale to URL and a locale selector",
+    "keywords": ["zf2", "locale", "i18n"],
+    "require": {
+        "php": ">=5.4"
+    }
+}
