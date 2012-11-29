@@ -14,19 +14,19 @@ use Zend\Mvc\Service\ConfigFactory as ZendConfigFactory;
  */
 class ConfigFactory extends ZendConfigFactory
 {
-    /**
-     * Rewrite router config to prepend a language part route
-     *
-     * @param  ServiceLocatorInterface $serviceLocator
-     * @return array|\Traversable
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        $config = parent::createService($serviceLocator);
+	/**
+	 * Rewrite router config to prepend a language part route
+	 *
+	 * @param  ServiceLocatorInterface $serviceLocator
+	 * @return array|\Traversable
+	 */
+	public function createService(ServiceLocatorInterface $serviceLocator)
+	{
+		$config = parent::createService($serviceLocator);
 
-        $mode = !isset($config['wfklocale']['mode']) ? ModuleOptions::MODE_URLKEY : $config['wfklocale']['mode'];
-        if ($mode == ModuleOptions::MODE_URLKEY && isset($config['router']))
-        {
+		$mode = !isset($config['wfklocale']['mode']) ? ModuleOptions::MODE_URLKEY : $config['wfklocale']['mode'];
+		if ($mode == ModuleOptions::MODE_URLKEY && isset($config['router']))
+		{
 			$localeEnabledRoutes = array();
 			$localeDisabledRoutes = array();
 			foreach($config['router']['routes'] as $key => $route)
@@ -37,13 +37,13 @@ class ConfigFactory extends ZendConfigFactory
 				}
 				else
 				{
-					$localeDisabledRoutes[$key] = $route;
+					$localeEnabledRoutes[$key] = $route;
 				}
 			}
 
-            $possibleLocales = $config['wfklocale']['enabled'];
-            $possibleLocales = array_unique(array_values($possibleLocales));
-            $config['router']['routes'] = array_merge(
+			$possibleLocales = $config['wfklocale']['enabled'];
+			$possibleLocales = array_unique(array_values($possibleLocales));
+			$config['router']['routes'] = array_merge(
 				array(
 					'wfklocale-root' => array(
 						'type' => 'Segment',
@@ -56,11 +56,11 @@ class ConfigFactory extends ZendConfigFactory
 						'may_terminate' => false,
 						'child_routes' => $localeEnabledRoutes
 					)
-            	),
+				),
 				$localeDisabledRoutes
 			);
-        }
+		}
 
-        return $config;
-    }
+		return $config;
+	}
 }
