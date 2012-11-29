@@ -78,6 +78,13 @@ class LocaleRouteStack implements RouteStackInterface
      */
     public function assemble(array $params = array(), array $options = array())
     {
+		try
+		{
+			return $this->originalRouteStack->assemble($params, $options);
+		}
+		catch(\Zend\Mvc\Router\Exception\RuntimeException $e)
+		{ }
+
         if (isset($options['name']) && substr($options['name'], 0, 14) !== 'wfklocale-root')
         {
             $options['name'] = 'wfklocale-root/' . $options['name'];
@@ -87,7 +94,7 @@ class LocaleRouteStack implements RouteStackInterface
         {
             $params['locale'] = $this->getCurrentLocale();
         }
-        return $this->originalRouteStack->assemble($params, $options);
+		return $this->originalRouteStack->assemble($params, $options);
     }
 
     /**
