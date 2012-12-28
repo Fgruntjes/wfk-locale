@@ -3,7 +3,7 @@
     "description": "Adds locale to URL and a locale selector",
     "keywords": ["zf2", "locale", "i18n"],
     "require": {
-        "php": ">=5.4",
+        "php": ">=5.3",
         "zendframework/zendframework": "2.*"
     },
     "autoload": {
