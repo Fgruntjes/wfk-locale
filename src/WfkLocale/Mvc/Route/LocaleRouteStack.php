@@ -3,6 +3,7 @@ namespace WfkLocale\Mvc\Route;
 
 use Zend\Mvc\Router\RouteStackInterface;
 use Zend\Mvc\Router\RouteMatch;
+use Zend\Mvc\Router\Http\RouteMatch as HttpRouteMatch;
 use WfkLocale\Options\ModuleOptions;
 use Zend\Stdlib\RequestInterface as Request;
 use Zend\Http\Request as HttpRequest;
@@ -66,7 +67,19 @@ class LocaleRouteStack implements RouteStackInterface
             }
         }
         // Return regular route match
-        return $this->originalRouteStack->match($request);
+        $match = $this->originalRouteStack->match($request);
+
+        if($match instanceof HttpRouteMatch)
+        {
+            if(substr($match->getMatchedRouteName(), 0, 15) == 'wfklocale-root/')
+            {
+                $newMatch = new HttpRouteMatch(array());
+                $newMatch->setMatchedRouteName(substr($match->getMatchedRouteName(), 15));
+                $match->merge($newMatch);
+            }
+        }
+
+        return $match;
     }
 
     /**
