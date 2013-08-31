@@ -3,7 +3,6 @@ namespace WfkLocale\Mvc\Route;
 
 use Zend\EventManager\ListenerAggregateInterface;
 use Locale;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\Mvc\MvcEvent;
 use Zend\Http\Request as HttpRequest;
 use Zend\Http\Response as HttpResponse;
@@ -129,11 +128,14 @@ class LocaleListener implements ListenerAggregateInterface
 		}
 
 		$localeMatch = $e->getRouteMatch()->getParam('locale');
-		if($localeMatch === null)
+		if($localeMatch !== null)
 		{
-			return null;
+            $locale = $this->options->getLocale($localeMatch);
 		}
-		$locale = $this->options->getLocale($localeMatch);
+        else
+        {
+            $locale = $this->options->getDefaultLocale();
+        }
 
 		Locale::setDefault($locale);
 
