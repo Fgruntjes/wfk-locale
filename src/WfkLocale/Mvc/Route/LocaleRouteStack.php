@@ -1,7 +1,10 @@
 <?php
 namespace WfkLocale\Mvc\Route;
 
-use Zend\Mvc\Router\Http\TranslatorAwareTreeRouteStack;
+use RuntimeException;
+use Zend\I18n\Translator\Translator;
+use Zend\I18n\Translator\TranslatorAwareInterface;
+use Zend\Mvc\Router\Http\TreeRouteStack;
 use Zend\Mvc\Router\RouteStackInterface;
 use Zend\Mvc\Router\RouteMatch;
 use Zend\Mvc\Router\Http\RouteMatch as HttpRouteMatch;
@@ -9,7 +12,7 @@ use WfkLocale\Options\ModuleOptions;
 use Zend\Stdlib\RequestInterface as Request;
 use Zend\Http\Request as HttpRequest;
 
-class LocaleRouteStack extends TranslatorAwareTreeRouteStack
+class LocaleRouteStack extends TreeRouteStack implements TranslatorAwareInterface
 {
     /**
      * @var RouteStackInterface
@@ -171,5 +174,120 @@ class LocaleRouteStack extends TranslatorAwareTreeRouteStack
             return $this->options->getDefaultLocale();
         }
         return $this->currentLocale;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setTranslator(Translator $translator = null, $textDomain = null)
+    {
+        $original = $this->originalRouteStack;
+        if($original instanceof TranslatorAwareInterface)
+        {
+            $original->setTranslator($translator, $textDomain);
+        }
+        else
+        {
+            throw new RuntimeException('Method not implemented.');
+        }
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTranslator()
+    {
+        $original = $this->originalRouteStack;
+        if($original instanceof TranslatorAwareInterface)
+        {
+            return $original->getTranslator();
+        }
+        else
+        {
+            throw new RuntimeException('Method not implemented.');
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function hasTranslator()
+    {
+        $original = $this->originalRouteStack;
+        if($original instanceof TranslatorAwareInterface)
+        {
+            return $original->hasTranslator();
+        }
+        else
+        {
+            throw new RuntimeException('Method not implemented.');
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setTranslatorEnabled($enabled = true)
+    {
+        $original = $this->originalRouteStack;
+        if($original instanceof TranslatorAwareInterface)
+        {
+            $original->setTranslatorEnabled($enabled);
+        }
+        else
+        {
+            throw new RuntimeException('Method not implemented.');
+        }
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isTranslatorEnabled()
+    {
+        $original = $this->originalRouteStack;
+        if($original instanceof TranslatorAwareInterface)
+        {
+            return $original->isTranslatorEnabled();
+        }
+        else
+        {
+            throw new RuntimeException('Method not implemented.');
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setTranslatorTextDomain($textDomain = 'default')
+    {
+        $original = $this->originalRouteStack;
+        if($original instanceof TranslatorAwareInterface)
+        {
+            $original->setTranslatorTextDomain($textDomain);
+        }
+        else
+        {
+            throw new RuntimeException('Method not implemented.');
+        }
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTranslatorTextDomain()
+    {
+        $original = $this->originalRouteStack;
+        if($original instanceof TranslatorAwareInterface)
+        {
+            return $original->getTranslatorTextDomain();
+        }
+        else
+        {
+            throw new RuntimeException('Method not implemented.');
+        }
     }
 }
