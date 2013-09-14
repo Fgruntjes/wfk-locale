@@ -1,7 +1,7 @@
 <?php
 namespace WfkLocale\Mvc\Route;
 
-use Zend\Mvc\Router\Http\TreeRouteStack;
+use Zend\Mvc\Router\Http\TranslatorAwareTreeRouteStack;
 use Zend\Mvc\Router\RouteStackInterface;
 use Zend\Mvc\Router\RouteMatch;
 use Zend\Mvc\Router\Http\RouteMatch as HttpRouteMatch;
@@ -9,7 +9,7 @@ use WfkLocale\Options\ModuleOptions;
 use Zend\Stdlib\RequestInterface as Request;
 use Zend\Http\Request as HttpRequest;
 
-class LocaleRouteStack extends TreeRouteStack
+class LocaleRouteStack extends TranslatorAwareTreeRouteStack
 {
     /**
      * @var RouteStackInterface

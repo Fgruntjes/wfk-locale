@@ -87,7 +87,7 @@ class Module implements
                     $locator = $sm->getServiceLocator();
                     return new View\Helper\WfkLocale(
                         $locator->get('wfklocale-options'),
-                        $locator->get('Translator')
+                        $locator->get('MvcTranslator')
                     );
                 },
             ),
